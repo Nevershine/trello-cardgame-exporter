@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "target": "ES2015",
+    "outDir": "bin"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
