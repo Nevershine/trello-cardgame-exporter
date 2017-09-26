@@ -1,6 +1,6 @@
-# Trello Card Exporter
+# [WIP] Trello Card Game Exporter
 
-This is an early WIP. It turns Trello's JSON output into a much cleaner format for prototyping card games.
+Design card games in Trello and get a simple JSON format.
 
 ## Install
 

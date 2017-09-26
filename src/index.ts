@@ -1,34 +1,34 @@
 #!/usr/bin/env node
 import {readFileSync} from "fs";
 
-interface ITrelloExport {
+interface TrelloExport {
   cards: any[];
   lists: any[];
 }
 
-interface IRawCard {
-  name: string;
-  description: string;
+interface RawCard {
   deck: string;
-}
-
-interface IWrittenCard {
-  name: string;
   description: string;
+  name: string;
 }
 
-interface IList {
+interface WrittenCard {
+  description: string;
   name: string;
+}
+
+interface List {
   id: string;
-}
-
-interface IDeck {
   name: string;
-  cards: IWrittenCard[]
 }
 
-interface IDeckMap {
-  [index: string]: IDeck;
+interface Deck {
+  cards: WrittenCard[];
+  name: string;
+}
+
+interface DeckMap {
+  [index: string]: Deck;
 }
 
 const inputFile: string = process.argv[2];
@@ -39,7 +39,7 @@ if (!inputFile) {
 }
 
 const rawInput = readFileSync(inputFile, "utf8");
-let input: ITrelloExport;
+let input: TrelloExport;
 
 try {
   input = JSON.parse(rawInput);
@@ -48,50 +48,50 @@ try {
   process.exit(0);
 }
 
-function createCard(cardData: any): IRawCard {
+function createCard(cardData: any): RawCard {
   return {
-    name: cardData.name,
+    deck: cardData.idList,
     description: cardData.desc,
-    deck: cardData.idList
-  }
+    name: cardData.name,
+  };
 }
 
-function createList(listData: any): IList {
+function createList(listData: any): List {
   return {
+    id: listData.id,
     name: listData.name,
-    id: listData.id
-  }
+  };
 }
 
-function createDecks(cards: IRawCard[], lists: IList[]): IDeck[] {
-  let decks: IDeckMap = {};
+function createDecks(cards: RawCard[], lists: List[]): Deck[] {
+  const decks: DeckMap = {};
 
-  lists.forEach((list: IList) => {
+  lists.forEach((list: List) => {
     decks[list.id] = {
+      cards: [],
       name: list.name,
-      cards: []
     };
   });
 
-  cards.forEach((card: IRawCard) => {
-    const writtenCard: IWrittenCard = {
+  cards.forEach((card: RawCard) => {
+    const writtenCard: WrittenCard = {
+      description: card.description,
       name: card.name,
-      description: card.description
     };
     decks[card.deck].cards = decks[card.deck].cards.concat(writtenCard);
   });
 
-  return lists.map((list: IList) => {
+  return lists.map((list: List) => {
     return decks[list.id];
   });
 
 }
 
-const cardList: IRawCard[] = input.cards.map((card: any) => {
+const cardList: RawCard[] = input.cards.map((card: any) => {
   return createCard(card);
 });
 
-const listList: IList[] = input.lists.map((list: any) => {
+const listList: List[] = input.lists.map((list: any) => {
   return createList(list);
 });
 

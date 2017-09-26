@@ -1,13 +1,14 @@
 {
-  "name": "trello-card-exporter",
-  "version": "1.0.0",
+  "name": "trello-cardgame-exporter",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "bin": {
     "cardexport": "./bin/index.js"
   },
   "scripts": {
-    "build": "./node_modules/.bin/tsc"
+    "build": "./node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/tslint ./src/**/*.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^8.0.31",
     "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
     "typescript": "^2.5.2"
   }
 }
