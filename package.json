@@ -6,6 +6,9 @@
   "bin": {
     "cardexport": "./bin/index.js"
   },
+  "files": [
+    "bin"
+  ],
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "lint": "./node_modules/.bin/tslint ./src/**/*.ts"
